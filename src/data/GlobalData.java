@@ -1,10 +1,19 @@
 package data;
 
+<<<<<<< HEAD
+=======
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
+>>>>>>> 3198f50 (initial commit)
 import model.*;
 
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< HEAD
 
+=======
+@FieldDefaults(level = AccessLevel.PRIVATE)
+>>>>>>> 3198f50 (initial commit)
 public class GlobalData {
     static long flightId = 0;
 
