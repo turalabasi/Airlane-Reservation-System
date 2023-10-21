@@ -97,7 +97,7 @@ public class ServiceHelper {
     }
     private static LocalTime dateHelperService() {
         try {
-            String str1 = InputUtil.getInstance().inputString("Enter the Local Date (day-month-years) : ");
+            String str1 = InputUtil.getInstance().inputString("Enter the Date time (hours-minutes) : ");
             String[] str2 = str1.split("-");
             int hours = Integer.parseInt(str2[0]);
             int minutes = Integer.parseInt(str2[1]);
@@ -109,11 +109,13 @@ public class ServiceHelper {
     }
 
     public static Flight searchFlight(long id){
-        GlobalData.noticeBoard.getFlightList().stream()
+       return  GlobalData.noticeBoard.getFlightList().stream()
                 .filter(flight -> flight.getId() == id)
-                .forEach(System.out::println);
+               .findFirst()
+               .orElseThrow();
 
-        return new Flight();
+
+
     }
     public static Ticket searchTicket(long tId){
         GlobalData.ticketList.stream()

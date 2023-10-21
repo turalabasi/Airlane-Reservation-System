@@ -9,6 +9,8 @@ import service.AdminService;
 
 import java.time.Duration;
 
+import static data.GlobalData.noticeBoard;
+
 
 public class AdminServiceImpl implements AdminService {
     @Override
@@ -16,7 +18,9 @@ public class AdminServiceImpl implements AdminService {
         Flight flight = ServiceHelper.fillFlight();
 
          if (flight != null){
-             GlobalData.noticeBoard.addFlight(flight);
+             noticeBoard.addFlight(flight);
+             flight.setFlightStatus(true);
+
              return true;
          }
         return false;
@@ -34,26 +38,26 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void viewFlight() {
-        if (GlobalData.noticeBoard.getFlightList().isEmpty() ){
+        if (noticeBoard.getFlightList().isEmpty() ){
             throw new ApplicationException(ExceptionEnum.FLIGHT_NOT_FOUND);
         }
-        GlobalData.noticeBoard.getFlightList()
+        noticeBoard.getFlightList()
                 .forEach(System.out::println);
 
     }
 
     @Override
     public void viewPassenger() {
-        if (GlobalData.noticeBoard.getFlightList().isEmpty() ){
+        if (noticeBoard.getFlightList().isEmpty() ){
             throw new ApplicationException(ExceptionEnum.FLIGHT_NOT_FOUND);
         }
-        GlobalData.noticeBoard.getFlightList()
+        noticeBoard.getFlightList()
                 .forEach(System.out::println);
     }
 
     @Override
     public void viewNoticeBoard() {
-        for (Flight flight : GlobalData.noticeBoard.getFlightList()) {
+        for (Flight flight : noticeBoard.getFlightList()) {
 
             Duration duration = Duration.between(flight.getStartingTime(), flight.getReachingTime());
             if (duration.toHours() < 24) {

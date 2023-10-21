@@ -1,6 +1,8 @@
 package service.impl;
 
+import Exceptions.ApplicationException;
 import data.GlobalData;
+import enums.ExceptionEnum;
 import model.Flight;
 import service.*;
 import util.MenuUtil;
@@ -10,6 +12,9 @@ import java.util.InputMismatchException;
 public class CustomerServiceImpl implements CustomerService {
     @Override
     public void viewFlights() {
+        if (GlobalData.noticeBoard.getFlightList().isEmpty() ){
+            throw new ApplicationException(ExceptionEnum.FLIGHT_NOT_FOUND);
+        }
         GlobalData.noticeBoard.getFlightList().stream()
                 .filter(Flight::isFlightStatus)
                 .forEach(System.out::println);

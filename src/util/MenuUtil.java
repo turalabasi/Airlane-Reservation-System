@@ -34,7 +34,7 @@ public class MenuUtil {
 
     public byte flightsMenu() {
         System.out.println(
-                "[1]-> Back \n" +
+                "[0]-> Back \n" +
                         "[1]-> View Flights \n" +
                         "[2]-> Search Flights \n");
 
