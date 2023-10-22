@@ -63,7 +63,6 @@ public class CustomerServiceImpl implements CustomerService {
                 throw new ApplicationException(ExceptionEnum.EXPIRED_TIME);
             }
             if (flight.getId() == cancelId){
-                long id = InputUtil.getInstance().inputLong("Enter the  passenger id: ");
                 noticeBoard.getFlightList().remove(flight);
 
                 long tId = InputUtil.getInstance().inputLong("Enter the ticket id: ");
@@ -71,6 +70,7 @@ public class CustomerServiceImpl implements CustomerService {
                 ticket.setFlightId(flight.getId());
                 ticketList.remove(ticket);
 
+                long id = InputUtil.getInstance().inputLong("Enter the  passenger id: ");
                 Passenger passenger = ServiceHelper.searchPassenger(id);
                 passenger.setBalance(passenger.getBalance() + flight.getPrice());
                 airport.setTotalAmount(airport.getTotalAmount() - flight.getPrice());
