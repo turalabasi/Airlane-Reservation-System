@@ -4,6 +4,7 @@ import data.GlobalData;
 import model.*;
 import util.InputUtil;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -19,7 +20,7 @@ public class ServiceHelper {
         String name = InputUtil.getInstance().inputString("Enter the flight name : "); ;
         String source = InputUtil.getInstance().inputString("Enter the flight source airport : "); ; ;
         String destination = InputUtil.getInstance().inputString("Enter the flight destination : "); ;;
-        LocalDateTime date = LocalDateTime.now();
+        LocalDateTime date = dateTimeHelperService();
         LocalTime startingTime = dateHelperService();
         LocalTime reachingTime = dateHelperService();
         double price = InputUtil.getInstance().inputDouble("enter the  price");
@@ -97,11 +98,13 @@ public class ServiceHelper {
     }
     private static LocalTime dateHelperService() {
         try {
-            String str1 = InputUtil.getInstance().inputString("Enter the Date time (hours-minutes) : ");
+            String str1 = InputUtil.getInstance().inputString("Enter the  time (hours-minutes-seconds) : ");
             String[] str2 = str1.split("-");
             int hours = Integer.parseInt(str2[0]);
             int minutes = Integer.parseInt(str2[1]);
-            return LocalTime.of(hours, minutes);
+            int seconds = Integer.parseInt(str2[1]);
+            return LocalTime.of(hours,minutes,seconds);
+
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
@@ -118,10 +121,35 @@ public class ServiceHelper {
 
     }
     public static Ticket searchTicket(long tId){
-        GlobalData.ticketList.stream()
+        return GlobalData.ticketList.stream()
                 .filter(ticket -> ticket.getId() == tId)
-                .forEach(System.out::println);
+                .findFirst()
+                .orElseThrow();
 
-        return new Ticket();
+
+    }
+    private static LocalDateTime dateTimeHelperService() {
+        try {
+            String dateInput = InputUtil.getInstance().inputString(("Enter the Local Date (day-month-year): "));
+            String timeInput = InputUtil.getInstance().inputString(("Enter the Local Time for the Date (hours-minutes): "));
+
+
+            String[] dateParts = dateInput.split("-");
+            int year = Integer.parseInt(dateParts[2]);
+            int month = Integer.parseInt(dateParts[1]);
+            int day = Integer.parseInt(dateParts[0]);
+
+            String[] timeParts = timeInput.split("-");
+            int hours = Integer.parseInt(timeParts[0]);
+            int minutes = Integer.parseInt(timeParts[1]);
+
+            LocalDate date = LocalDate.of(year, month, day);
+            LocalTime time = LocalTime.of(hours, minutes);
+
+            return LocalDateTime.of(date,time);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }

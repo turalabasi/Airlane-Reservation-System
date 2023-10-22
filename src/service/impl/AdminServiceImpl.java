@@ -6,8 +6,9 @@ import enums.ExceptionEnum;
 import helper.ServiceHelper;
 import model.Flight;
 import service.AdminService;
+import util.InputUtil;
 
-import java.time.Duration;
+import java.time.*;
 
 import static data.GlobalData.noticeBoard;
 
@@ -17,12 +18,14 @@ public class AdminServiceImpl implements AdminService {
     public boolean addFlight() {
         Flight flight = ServiceHelper.fillFlight();
 
-         if (flight != null){
-             noticeBoard.addFlight(flight);
-             flight.setFlightStatus(true);
+        if (flight != null) {
+            noticeBoard.addFlight(flight);
+            if (LocalTime.now().isAfter(flight.getStartingTime()) && LocalTime.now().isBefore(flight.getReachingTime()) ) {
+                flight.setFlightStatus(true);
+                return true;
+            }
 
-             return true;
-         }
+        }
         return false;
     }
 
@@ -59,9 +62,10 @@ public class AdminServiceImpl implements AdminService {
     public void viewNoticeBoard() {
         for (Flight flight : noticeBoard.getFlightList()) {
 
-            Duration duration = Duration.between(flight.getStartingTime(), flight.getReachingTime());
-            if (duration.toHours() < 24) {
-                flight.setFlightStatus(true);
+            Duration duration = Duration.between(flight.getDate(),LocalDateTime.now() );
+            if ( duration.toHours() < 24) {
+                System.out.println(flight);
+
             }
 
         }
@@ -69,6 +73,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void search() {
+        long id = InputUtil.getInstance().inputLong("enter the ticket id: ");
+        ServiceHelper.searchTicket(id);
 
     }
 }
