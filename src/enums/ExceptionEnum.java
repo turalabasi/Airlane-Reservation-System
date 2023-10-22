@@ -7,6 +7,7 @@ public enum ExceptionEnum {
     FLIGHT_NOT_FOUND("Book not found", LocalDateTime.now()),
     CUSTOMER_NOT_FOUND("Customer not found", LocalDateTime.now()),
     TICKETS_NOT_FOUND("Order not found", LocalDateTime.now()),
+    EXPIRED_TIME("Expired time ",LocalDateTime.now()),
     LOW_MONEY_EXCEPTION("LOW MONEY BALANCE : ",LocalDateTime.now() );
 
     ExceptionEnum(String message, LocalDateTime localDateTime) {

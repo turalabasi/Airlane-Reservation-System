@@ -40,6 +40,13 @@ public class IFlightService implements FlightService {
         Passenger passenger = ServiceHelper.fillPassenger();
         passengerList.add(passenger);
 
+        accountActions(flight, ticket, passenger, flight.getSource(), flight.getDestination());
+
+
+    }
+
+    private void accountActions(Flight flight, Ticket ticket, Passenger passenger, Object source, Object destination) {
+
         GlobalData.airport.setTotalAmount(airport.getTotalAmount() - ticket.getPrice() );
         passenger.setBalance(passenger.getBalance() - ticket.getPrice());
         System.out.println("------ Cash Receipt ------");
@@ -50,17 +57,13 @@ public class IFlightService implements FlightService {
         System.out.println("Passenger full name: " + passenger.getName() + " " + passenger.getSurname());
         System.out.println("Passenger phone number: " + passenger.getPhoneNumber());
         System.out.println("Passenger email: " + passenger.getEmail());
-        System.out.println("Source: " +flight.getSource());
-        System.out.println("Destination: " + flight.getDestination());
+        System.out.println("Source: " + source);
+        System.out.println("Destination: " + destination);
         System.out.println("Date: " + flight.getDate());
         System.out.println("StartingTime: " + flight.getStartingTime());
         System.out.println("ReachingTime: " + flight.getReachingTime());
         System.out.println("Cash: " + ticket.getPrice() + " AZN");
         System.out.println("-------------------------");
-
-
-
-
     }
 
     @Override
@@ -73,24 +76,7 @@ public class IFlightService implements FlightService {
 
         Passenger passenger = ServiceHelper.fillPassenger();
 
-        GlobalData.airport.setTotalAmount(airport.getTotalAmount() - ticket.getPrice() );
-        passenger.setBalance(passenger.getBalance() - ticket.getPrice());
-
-        System.out.println("------ Cash Receipt ------");
-
-        System.out.println("Date: " + LocalDateTime.now());
-        System.out.println("Flight name: " + flight.getName());
-        System.out.println("Seat number: " + passenger.getSeatNumber());
-        System.out.println("Passenger full name: " + passenger.getName() + " " + passenger.getSurname());
-        System.out.println("Passenger phone number: " + passenger.getPhoneNumber());
-        System.out.println("Passenger email: " + passenger.getEmail());
-        System.out.println("Source: " + ticket.getSource());
-        System.out.println("Destination: " + ticket.getDestination());
-        System.out.println("Date: " + flight.getDate());
-        System.out.println("StartingTime: " + flight.getStartingTime());
-        System.out.println("ReachingTime: " + flight.getReachingTime());
-        System.out.println("Cash: " + ticket.getPrice() + " AZN");
-        System.out.println("-------------------------");
+        accountActions(flight, ticket, passenger, ticket.getSource(), ticket.getDestination());
     }
 }
 

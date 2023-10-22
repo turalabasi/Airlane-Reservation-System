@@ -10,6 +10,8 @@ import java.time.LocalTime;
 
 import java.util.Random;
 
+import static data.GlobalData.airport;
+
 public class ServiceHelper {
     static long passengerId = 0 ;
     static long ticketId = 0;
@@ -117,8 +119,13 @@ public class ServiceHelper {
                .findFirst()
                .orElseThrow();
 
+    }
 
-
+    public static Passenger searchPassenger(long id){
+        return  GlobalData.passengerList.stream()
+                .filter(passenger -> passenger.getId() == id)
+                .findFirst()
+                .orElseThrow();
     }
     public static Ticket searchTicket(long tId){
         return GlobalData.ticketList.stream()
@@ -128,6 +135,8 @@ public class ServiceHelper {
 
 
     }
+
+
     private static LocalDateTime dateTimeHelperService() {
         try {
             String dateInput = InputUtil.getInstance().inputString(("Enter the Local Date (day-month-year): "));

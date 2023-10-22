@@ -3,11 +3,20 @@ package service.impl;
 import Exceptions.ApplicationException;
 import data.GlobalData;
 import enums.ExceptionEnum;
+import helper.ServiceHelper;
 import model.Flight;
+import model.Passenger;
+import model.Ticket;
 import service.*;
+import util.InputUtil;
 import util.MenuUtil;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.InputMismatchException;
+
+import static data.GlobalData.*;
 
 public class CustomerServiceImpl implements CustomerService {
     @Override
@@ -46,6 +55,21 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void cancelTicket() {
+        long cancelId = InputUtil.getInstance().inputLong("Enter the order to cancel: ");
+        for (Flight flight : GlobalData.noticeBoard.getFlightList()){
+            LocalDateTime nowDate = LocalDateTime.now();
+            Duration duration = Duration.between(nowDate, flight.getDate().minusMinutes(30));
+            if (duration.isNegative()){
+                throw new ApplicationException(ExceptionEnum.EXPIRED_TIME);
+            }
+            if (flight.getId() == cancelId){
+                long id = InputUtil.getInstance().inputLong("Enter the  passenger id: ");
+                Passenger passenger = ServiceHelper.searchPassenger(id);
+                passenger.setBalance(passenger.getBalance() + flight.getPrice());
+                airport.setTotalAmount(airport.getTotalAmount() - flight.getPrice());
+
+            }
+        }
 
     }
 }
