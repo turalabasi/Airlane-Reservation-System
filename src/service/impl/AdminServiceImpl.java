@@ -11,6 +11,7 @@ import util.InputUtil;
 import java.time.*;
 
 import static data.GlobalData.noticeBoard;
+import static data.GlobalData.passengerList;
 
 
 public class AdminServiceImpl implements AdminService {
@@ -51,10 +52,10 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void viewPassenger() {
-        if (noticeBoard.getFlightList().isEmpty() ){
-            throw new ApplicationException(ExceptionEnum.FLIGHT_NOT_FOUND);
+        if (passengerList.isEmpty() ){
+            throw new ApplicationException(ExceptionEnum.PASSANGER_NOT_FOUND);
         }
-        noticeBoard.getFlightList()
+        passengerList
                 .forEach(System.out::println);
     }
 

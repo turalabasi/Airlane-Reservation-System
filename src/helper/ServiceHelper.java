@@ -13,15 +13,21 @@ import java.util.Random;
 import static data.GlobalData.airport;
 
 public class ServiceHelper {
-    static long passengerId = 0 ;
+    static  long id =0;
+    static long passengerId = 0;
     static long ticketId = 0;
-    static long flightId = 0 ;
+    static long flightId = 0;
 
     public static Flight fillFlight() {
 
-        String name = InputUtil.getInstance().inputString("Enter the flight name : "); ;
-        String source = InputUtil.getInstance().inputString("Enter the flight source airport : "); ; ;
-        String destination = InputUtil.getInstance().inputString("Enter the flight destination : "); ;;
+        String name = InputUtil.getInstance().inputString("Enter the flight name : ");
+        ;
+        String source = InputUtil.getInstance().inputString("Enter the flight source airport : ");
+        ;
+        ;
+        String destination = InputUtil.getInstance().inputString("Enter the flight destination : ");
+        ;
+        ;
         LocalDateTime date = dateTimeHelperService();
         LocalTime startingTime = dateHelperService();
         LocalTime reachingTime = dateHelperService();
@@ -41,20 +47,16 @@ public class ServiceHelper {
     }
 
 
-    public static Passenger fillPassenger(){
-              String name = InputUtil.getInstance().inputString("Enter the passenger name: ");
-              String surname = InputUtil.getInstance().inputString("Enter your surname: ");
-              int age = InputUtil.getInstance().inputInt("Enter the age: ");
-              String birthdate = InputUtil.getInstance().inputString("Enter the birthdate: ");
-              String phoneNumber = InputUtil.getInstance().inputString("Enter the phone number:");
-              String email = InputUtil.getInstance().inputString("Enter the email:");
-              String passportNumber =InputUtil.getInstance().inputString("Enter the pass number:");
-              String gender = InputUtil.getInstance().inputString("Enter the phone number:");
-              int seatNumber = generateRandomSeatNumber();
-
-
-
-
+    public static Passenger fillPassenger() {
+        String name = InputUtil.getInstance().inputString("Enter the passenger name: ");
+        String surname = InputUtil.getInstance().inputString("Enter your surname: ");
+        int age = InputUtil.getInstance().inputInt("Enter the age: ");
+        String birthdate = InputUtil.getInstance().inputString("Enter the birthdate: ");
+        String phoneNumber = InputUtil.getInstance().inputString("Enter the phone number:");
+        String email = InputUtil.getInstance().inputString("Enter the email:");
+        String passportNumber = InputUtil.getInstance().inputString("Enter the pass number:");
+        String gender = InputUtil.getInstance().inputString("Enter the phone number:");
+        int seatNumber = generateRandomSeatNumber();
 
 
         return Passenger.builder()
@@ -72,19 +74,18 @@ public class ServiceHelper {
                 .ticketId(ticketId)
 
 
-
-
                 .build();
 
 
     }
+
     public static int generateRandomSeatNumber() {
         Random rand = new Random();
 
         return rand.nextInt(100) + 1;
     }
 
-    public static Ticket fillTicket(){
+    public static Ticket fillTicket() {
         int ticketNumber = generateRandomSeatNumber();
         String source = InputUtil.getInstance().inputString("Enter the departure place: ");
         String destination = InputUtil.getInstance().inputString("Enter the destination place: ");
@@ -98,6 +99,7 @@ public class ServiceHelper {
                 .build();
 
     }
+
     private static LocalTime dateHelperService() {
         try {
             String str1 = InputUtil.getInstance().inputString("Enter the  time (hours-minutes-seconds) : ");
@@ -105,7 +107,7 @@ public class ServiceHelper {
             int hours = Integer.parseInt(str2[0]);
             int minutes = Integer.parseInt(str2[1]);
             int seconds = Integer.parseInt(str2[1]);
-            return LocalTime.of(hours,minutes,seconds);
+            return LocalTime.of(hours, minutes, seconds);
 
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
@@ -113,21 +115,22 @@ public class ServiceHelper {
         return null;
     }
 
-    public static Flight searchFlight(long id){
-       return  GlobalData.noticeBoard.getFlightList().stream()
+    public static Flight searchFlight(long id) {
+        return GlobalData.noticeBoard.getFlightList().stream()
                 .filter(flight -> flight.getId() == id)
-               .findFirst()
-               .orElseThrow();
+                .findFirst()
+                .orElseThrow();
 
     }
 
-    public static Passenger searchPassenger(long id){
-        return  GlobalData.passengerList.stream()
+    public static Passenger searchPassenger(long id) {
+        return GlobalData.passengerList.stream()
                 .filter(passenger -> passenger.getId() == id)
                 .findFirst()
                 .orElseThrow();
     }
-    public static Ticket searchTicket(long tId){
+
+    public static Ticket searchTicket(long tId) {
         return GlobalData.ticketList.stream()
                 .filter(ticket -> ticket.getId() == tId)
                 .findFirst()
@@ -155,10 +158,16 @@ public class ServiceHelper {
             LocalDate date = LocalDate.of(year, month, day);
             LocalTime time = LocalTime.of(hours, minutes);
 
-            return LocalDateTime.of(date,time);
+            return LocalDateTime.of(date, time);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
         return null;
     }
+    public static Ticket getTicket(Flight flight) {
+        Ticket ticket = new Ticket(++id,generateRandomSeatNumber(), flight.getSource(), flight.getDestination(), flight.getPrice(), flight.getId());
+        GlobalData.ticketList.add(ticket);
+        return ticket;
+    }
+
 }

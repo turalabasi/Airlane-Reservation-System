@@ -31,8 +31,7 @@ public class IFlightService implements FlightService {
         Flight flight = ServiceHelper.searchFlight(fId) ;
 
 
-        Ticket ticket = new Ticket(++id,generateRandomSeatNumber(), flight.getSource(), flight.getDestination(),flight.getPrice(),flight.getId());
-        GlobalData.ticketList.add(ticket);
+         Ticket ticket = ServiceHelper.getTicket(flight);;
 
 
         ticket.setFlightId(fId);
@@ -69,7 +68,7 @@ public class IFlightService implements FlightService {
     @Override
     public void searchFlights() {
         Flight flight = fillFlight();
-        Ticket ticket = new Ticket(++id,generateRandomSeatNumber(), flight.getSource(), flight.getDestination(),flight.getPrice(),flight.getId());
+        Ticket ticket = ServiceHelper.getTicket(flight);
 
         ticket.setFlightId(flight.getId());
         System.out.println(flight);
@@ -78,6 +77,8 @@ public class IFlightService implements FlightService {
 
         accountActions(flight, ticket, passenger, ticket.getSource(), ticket.getDestination());
     }
+
+
 }
 
 
