@@ -64,6 +64,7 @@ public class CustomerServiceImpl implements CustomerService {
             }
             if (flight.getId() == cancelId){
                 long id = InputUtil.getInstance().inputLong("Enter the  passenger id: ");
+                noticeBoard.getFlightList().remove(flight);
                 Passenger passenger = ServiceHelper.searchPassenger(id);
                 passenger.setBalance(passenger.getBalance() + flight.getPrice());
                 airport.setTotalAmount(airport.getTotalAmount() - flight.getPrice());
