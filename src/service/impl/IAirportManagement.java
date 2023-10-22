@@ -1,7 +1,6 @@
 package service.impl;
 
 import service.AdminManagement;
-import service.AdminService;
 import service.AirportManagement;
 import service.CustomerManagement;
 import util.MenuUtil;
@@ -13,7 +12,6 @@ public class IAirportManagement implements AirportManagement {
     public void management() {
         while (true){
             try {
-                AdminService adminService = new AdminServiceImpl();
                 AdminManagement adminManagement = new AdminManagementImpl();
                 CustomerManagement customerManagement = new CustomerManagementImpl();
                 byte choice =  MenuUtil.getInstance().mainMenu();

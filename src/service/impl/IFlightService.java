@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 import static data.GlobalData.airport;
 import static data.GlobalData.passengerList;
 import static helper.ServiceHelper.fillFlight;
-import static helper.ServiceHelper.generateRandomSeatNumber;
 
 public class IFlightService implements FlightService {
 
