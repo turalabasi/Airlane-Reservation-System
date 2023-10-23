@@ -38,12 +38,12 @@ public class IFlightService implements FlightService {
         Passenger passenger = ServiceHelper.fillPassenger();
         passengerList.add(passenger);
 
-        accountActions(flight, ticket, passenger, flight.getSource(), flight.getDestination());
+        accountActions(flight, ticket, passenger);
 
 
     }
 
-    private void accountActions(Flight flight, Ticket ticket, Passenger passenger, Object source, Object destination) {
+    private void accountActions(Flight flight, Ticket ticket, Passenger passenger) {
 
         GlobalData.airport.setTotalAmount(airport.getTotalAmount() - ticket.getPrice() );
         passenger.setBalance(passenger.getBalance() - ticket.getPrice());
@@ -55,8 +55,8 @@ public class IFlightService implements FlightService {
         System.out.println("Passenger full name: " + passenger.getName() + " " + passenger.getSurname());
         System.out.println("Passenger phone number: " + passenger.getPhoneNumber());
         System.out.println("Passenger email: " + passenger.getEmail());
-        System.out.println("Source: " + source);
-        System.out.println("Destination: " + destination);
+        System.out.println("Source: " + flight.getSource());
+        System.out.println("Destination: " + flight.getDestination());
         System.out.println("Date: " + flight.getDate());
         System.out.println("StartingTime: " + flight.getStartingTime());
         System.out.println("ReachingTime: " + flight.getReachingTime());
@@ -67,14 +67,17 @@ public class IFlightService implements FlightService {
     @Override
     public void searchFlights() {
         Flight flight = fillFlight();
+        GlobalData.noticeBoard.addFlight(flight);
         Ticket ticket = ServiceHelper.getTicket(flight);
+
 
         ticket.setFlightId(flight.getId());
         System.out.println(flight);
 
         Passenger passenger = ServiceHelper.fillPassenger();
+        passengerList.add(passenger);
 
-        accountActions(flight, ticket, passenger, ticket.getSource(), ticket.getDestination());
+        accountActions(flight, ticket, passenger);
     }
 
 

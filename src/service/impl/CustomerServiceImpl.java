@@ -54,17 +54,18 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void cancelTicket() {
-        long cancelId = InputUtil.getInstance().inputLong("Enter the order to cancel: ");
+        long cancelId = InputUtil.getInstance().inputLong("Enter the flight id: ");
         for (Flight flight : GlobalData.noticeBoard.getFlightList()){
             LocalDateTime nowDate = LocalDateTime.now();
-            Duration duration = Duration.between(nowDate, flight.getDate().minusMinutes(30));
+            Duration duration = Duration.between(nowDate, flight.getDate().minusDays(1));
             if (duration.isNegative()){
                 throw new ApplicationException(ExceptionEnum.EXPIRED_TIME);
             }
-            if (flight.getId() == cancelId){
-                noticeBoard.getFlightList().remove(flight);
 
-                long tId = InputUtil.getInstance().inputLong("Enter the ticket id: ");
+
+
+            if (flight.getId() == cancelId){
+                long tId =InputUtil.getInstance().inputLong("Enter the ticket id to cancel: ");
                 Ticket ticket = ServiceHelper.searchTicket(tId);
                 ticket.setFlightId(flight.getId());
                 ticketList.remove(ticket);
